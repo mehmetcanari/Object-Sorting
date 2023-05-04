@@ -18,7 +18,6 @@ namespace Kozar.Science
 
         public float CharacterSpeed => characterSpeed;
         public float SensitivityX => sensitivityX;
-        
         public float SensitivityY => sensitivityY;
 
         #endregion

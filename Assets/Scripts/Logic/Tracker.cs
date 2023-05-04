@@ -3,11 +3,12 @@ using UnityEngine;
 
 namespace Kozar.Science
 {
-    public class CameraTracker : MonoBehaviour
+    public class Tracker : MonoBehaviour
     {
         #region INSPECTOR FIELDS
 
         [SerializeField] private Transform targetTransform;
+        [SerializeField] private Vector3 offset;
 
         #endregion
         
@@ -24,7 +25,7 @@ namespace Kozar.Science
 
         private void TrackTarget()
         {
-            transform.position = targetTransform.position;
+            transform.position = targetTransform.position + offset;
         }
 
         #endregion

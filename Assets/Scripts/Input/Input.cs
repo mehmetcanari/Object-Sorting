@@ -14,6 +14,12 @@ namespace Kozar.Science
             return false;
         }
 
+        protected bool IsClicked()
+        {
+            if (UnityEngine.Input.GetMouseButtonDown(0)) { return true; }
+            return false;
+        }
+
         #endregion
 
         #region DERIVABLE PROPERTIES

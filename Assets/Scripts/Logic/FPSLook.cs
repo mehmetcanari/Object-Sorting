@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace  Kozar.Science
 {
-    internal class FPSLook : MonoBehaviour
+    internal class FPSLook : Input
     {
         #region SHARED FIELDS
 
@@ -26,8 +26,7 @@ namespace  Kozar.Science
 
         private void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            InitiliazeSettings();
         }
 
         private void Update()
@@ -45,13 +44,20 @@ namespace  Kozar.Science
 
         #region PRIVATE METHODS
 
+        private void InitiliazeSettings()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        
         private void Look()
         {
             var sensitivityX = playerControllerData.SensitivityX;
-            var sensitivitY = playerControllerData.SensitivityY;
+            var sensitivityY = playerControllerData.SensitivityY;
+
+            var mouseX = MouseX * Time.deltaTime * sensitivityX;
             
-            var mouseX = UnityEngine.Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
-            var mouseY = UnityEngine.Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivitY;
+            var mouseY = MouseY * Time.deltaTime * sensitivityY;
             
             _yRot += mouseX;
             

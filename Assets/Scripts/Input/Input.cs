@@ -15,6 +15,13 @@ namespace Kozar.Science
         }
 
         #endregion
+
+        #region DERIVABLE PROPERTIES
+
+        protected float MouseX => UnityEngine.Input.GetAxisRaw("Mouse X");
+        protected float MouseY => UnityEngine.Input.GetAxisRaw("Mouse Y");
+
+        #endregion
     }
 }
 

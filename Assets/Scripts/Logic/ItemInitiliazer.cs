@@ -56,7 +56,7 @@ namespace Kozar.Science
                 emptySlots[i].SetItem(item);
                 item.transform.position = emptySlots[i].transform.position;
                 item.gameObject.SetActive(true);
-                item.Slot = emptySlots[i];
+                item.SetSlot(emptySlots[i]);
             }
         }
 

@@ -19,6 +19,12 @@ namespace Kozar.Science
             if (UnityEngine.Input.GetMouseButtonDown(0)) { return true; }
             return false;
         }
+        
+        protected bool IsReleased()
+        {
+            if (UnityEngine.Input.GetMouseButtonUp(0)) { return true; }
+            return false;
+        }
 
         #endregion
 

@@ -21,7 +21,9 @@ namespace Kozar.Science
 
         internal void HoverItem()
         {
-            HoveredItem.transform.DOMove(followTransform.position, hoverSpeed);
+            HoveredItem.transform.DOMove(followTransform.position, hoverSpeed)
+                .SetLink(HoveredItem.gameObject)
+                .SetEase(Ease.InOutBack);
         }
         
         internal void SetParent(Transform obj,Transform parent)

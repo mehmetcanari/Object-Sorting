@@ -24,7 +24,7 @@ namespace Kozar.Science
         {
             this.item = item;
             isEmpty = false;
-            item.IsPlaced = true;
+            item.isPlaced = true;
             item.transform.parent = transform;
         }
         
@@ -32,7 +32,7 @@ namespace Kozar.Science
         {
             this.item = null;
             isEmpty = true;
-            item.IsPlaced = false;
+            item.isPlaced = false;
             item.transform.parent = null;
         }
 

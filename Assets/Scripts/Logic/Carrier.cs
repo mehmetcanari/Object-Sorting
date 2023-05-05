@@ -43,17 +43,20 @@ namespace Kozar.Science
         private Vector3 _targetPosition;
         private float _easeTime;
         private Input _input;
+        private AudioSource _audioSource;
         
-        internal Release(Slot slot, Vector3 targetPosition, float easeTime)
+        internal Release(Slot slot, Vector3 targetPosition, float easeTime, AudioSource audioSource)
         {
             _slot = slot;
             _targetPosition = targetPosition;
             _easeTime = easeTime;
+            _audioSource = audioSource;
         }
 
         internal void ReleaseItem(Item item,Slot slot)
         {
             if (!item) return;
+            _audioSource.Play();
             
             CheckLayerMaskWithReleaseCast();
 

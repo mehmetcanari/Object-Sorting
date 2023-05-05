@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 namespace Kozar.Science
 {
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    public class Selection : Carrier
+    public sealed class Selection : Carrier
     {
         #region INSPECTOR FIELDS
 
@@ -17,6 +17,7 @@ namespace Kozar.Science
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private Slot selectedSlot;
         [SerializeField] private Transform followTransform;
+        [SerializeField] private AudioSource releaseSound;
         private Item _item;
 
         #endregion
@@ -62,7 +63,7 @@ namespace Kozar.Science
             if (!IsReleased()) return;
             if (!item) return;
             
-            var release = new Release(selectedSlot, item.Slot.transform.position, 0.1f);
+            var release = new Release(selectedSlot, item.Slot.transform.position, 0.1f, releaseSound);
             release.ReleaseItem(item,selectedSlot);
             release.EnableCollider(item);
             selectedSlot = null;

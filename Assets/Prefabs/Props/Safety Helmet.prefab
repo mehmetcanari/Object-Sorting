@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2521337312900478700}
   - component: {fileID: 2521337312900478701}
   - component: {fileID: 2521337312900478699}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Safety Helmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2521337312900478702}
   m_LocalRotation: {x: -0, y: -0.2588186, z: -0, w: 0.965926}
-  m_LocalPosition: {x: -3.6614478, y: 1, z: 4.5633693}
+  m_LocalPosition: {x: -1.7604817, y: 1.15, z: 5.5550013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7e06a321714b1fbdf85162793bc1e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlaced: 0
 --- !u!1 &5115126638446087818
 GameObject:
   m_ObjectHideFlags: 0

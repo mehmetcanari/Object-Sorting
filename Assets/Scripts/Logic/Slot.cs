@@ -24,12 +24,16 @@ namespace Kozar.Science
         {
             this.item = item;
             isEmpty = false;
+            item.IsPlaced = true;
+            item.transform.parent = transform;
         }
         
-        public void RemoveItem()
+        public void RemoveItem(Item item)
         {
-            item = null;
+            this.item = null;
             isEmpty = true;
+            item.IsPlaced = false;
+            item.transform.parent = null;
         }
 
         #endregion

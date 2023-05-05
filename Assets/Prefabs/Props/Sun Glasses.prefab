@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3479714176689507915}
   - component: {fileID: 3479714176689507914}
   - component: {fileID: 3479714176689507912}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Sun Glasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3479714176689507917}
   m_LocalRotation: {x: -0, y: -0.9659259, z: -0, w: -0.25881895}
-  m_LocalPosition: {x: -2.346, y: 1, z: 5.047}
+  m_LocalPosition: {x: -4.358556, y: 1.15, z: 4.0549955}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b7e06a321714b1fbdf85162793bc1e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlaced: 0
 --- !u!1 &8998089722546497378
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Kozar.Science
 {
+    [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
     public class Selection : Carrier
     {
         #region INSPECTOR FIELDS
@@ -11,7 +14,7 @@ namespace Kozar.Science
         private RaycastHit _hit;
         [SerializeField] private float maxDistance;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private Item selectedItem;
+        [FormerlySerializedAs("selectedItem")] [SerializeField] private Slot selectedSlot;
         [SerializeField] private Transform followTransform;
 
         #endregion
@@ -39,17 +42,15 @@ namespace Kozar.Science
         {
             if(!IsClicked()) return;
             if (!GetRaycastHit().collider) return;
-            if(selectedItem) return;
+            if(selectedSlot) return;
             
-            selectedItem = _hit.collider.TryGetComponent(out Item item) ? item : null;
+            selectedSlot = _hit.collider.TryGetComponent(out Slot slot) ? slot : null;
+            var selectedItem = selectedSlot?.item;
+            selectedSlot.RemoveItem(selectedItem);
+            
             var hovering = new Hovering(selectedItem, followTransform, 0.25f);
             hovering.HoverItem();
-            SetParent(selectedItem.transform, followTransform);
-        }
-        
-        private void SetParent(Transform obj,Transform parent)
-        {
-            obj.transform.SetParent(parent);
+            hovering.SetParent(selectedItem.transform, followTransform);
         }
 
         #endregion

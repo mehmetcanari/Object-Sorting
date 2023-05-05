@@ -23,5 +23,10 @@ namespace Kozar.Science
         {
             HoveredItem.transform.DOMove(followTransform.position, hoverSpeed);
         }
+        
+        internal void SetParent(Transform obj,Transform parent)
+        {
+            obj.transform.SetParent(parent);
+        }
     }
 }

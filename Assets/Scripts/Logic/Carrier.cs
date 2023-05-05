@@ -6,13 +6,13 @@ namespace Kozar.Science
 {
     public class Carrier : Input { }
     
-    internal class Hovering
+    internal class Grab
     {
         protected readonly Item HoveredItem;
         protected readonly Transform followTransform;
         protected readonly float hoverSpeed;
 
-        internal Hovering(Item hoveredItem, Transform followTransform, float hoverSpeed)
+        internal Grab(Item hoveredItem, Transform followTransform, float hoverSpeed)
         {
             HoveredItem = hoveredItem;
             this.followTransform = followTransform;
@@ -29,6 +29,67 @@ namespace Kozar.Science
         internal void SetParent(Transform obj,Transform parent)
         {
             obj.transform.SetParent(parent);
+        }
+        
+        internal void DisableCollider(Item item)
+        {
+            item.GetComponent<Collider>().enabled = false;
+        }
+    }
+    
+    internal class Release
+    {
+        private readonly Slot _slot;
+        private Vector3 _targetPosition;
+        private float _easeTime;
+        private Input _input;
+        
+        internal Release(Slot slot, Vector3 targetPosition, float easeTime)
+        {
+            _slot = slot;
+            _targetPosition = targetPosition;
+            _easeTime = easeTime;
+        }
+
+        internal void ReleaseItem(Item item,Slot slot)
+        {
+            if (!item) return;
+            
+            CheckLayerMaskWithReleaseCast();
+
+            item.transform.parent = null;
+            item.gameObject.transform.DORotate(item.Rotation.eulerAngles, _easeTime)
+                .SetLink(item.gameObject)
+                .SetEase(Ease.InOutBack);
+            
+            item.gameObject.transform.DOMove(_targetPosition, _easeTime)
+                .SetLink(item.gameObject)
+                .SetEase(Ease.InOutBack)
+                .OnComplete(() =>
+                {
+                    slot.SetItem(item);
+                    item.transform.parent = slot.transform;
+                    item = null;
+                    slot = null;
+                });
+        }
+        
+        internal void EnableCollider(Item item)
+        {
+            item.GetComponent<Collider>().enabled = true;
+        }
+        
+        internal RaycastHit ReleaseCast()
+        {
+            var ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
+            Physics.Raycast(ray, out var hit, 10);
+            return hit;
+        }
+        
+        internal void CheckLayerMaskWithReleaseCast()
+        {
+            if (ReleaseCast().collider is null) return;
+            Debug.Log(ReleaseCast().collider.gameObject.layer);
         }
     }
 }

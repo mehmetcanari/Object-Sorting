@@ -51,9 +51,10 @@ namespace Kozar.Science
             var selectedItem = selectedSlot?.item;
             _item = selectedItem;
 
-            var hovering = new Hovering(selectedItem, followTransform, 0.1f);
+            var hovering = new Grab(selectedItem, followTransform, 0.1f);
             hovering.HoverItem();
             hovering.SetParent(selectedItem.transform, followTransform);
+            hovering.DisableCollider(selectedItem);
         }
         
         private void ReleaseItem(Item item)
@@ -61,23 +62,10 @@ namespace Kozar.Science
             if (!IsReleased()) return;
             if (!item) return;
             
-            var savedSlot = item.Slot;
-            
-            item.transform.parent = null;
-            item.gameObject.transform.DORotate(item.Rotation.eulerAngles, 0.1f)
-                .SetLink(item.gameObject)
-                .SetEase(Ease.InOutBack);
-            
-            item.gameObject.transform.DOMove(savedSlot.transform.position, 0.1f)
-                .SetLink(item.gameObject)
-                .SetEase(Ease.InOutBack)
-                .OnComplete(() =>
-                {
-                    selectedSlot.SetItem(item);
-                    item.transform.parent = selectedSlot.transform;
-                    _item = null;
-                    selectedSlot = null;
-                });
+            var release = new Release(selectedSlot, item.Slot.transform.position, 0.1f);
+            release.ReleaseItem(item,selectedSlot);
+            release.EnableCollider(item);
+            selectedSlot = null;
         }
 
         #endregion

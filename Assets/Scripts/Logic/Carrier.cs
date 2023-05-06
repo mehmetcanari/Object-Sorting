@@ -66,6 +66,8 @@ namespace Kozar.Science
                 .OnComplete(() =>
                 {
                     slot.SetItem(item);
+                    item.Slot = slot;
+                    item.PreviousSlot = slot;
                     slot.gameObject.layer = 6;
                     item.transform.parent = slot.transform;
                     item = null;
@@ -78,7 +80,7 @@ namespace Kozar.Science
             item.GetComponent<Collider>().enabled = true;
         }
         
-        private RaycastHit GetRaycastHit()
+        internal RaycastHit GetRaycastHit()
         {
             var ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             Physics.Raycast(ray, out var hit, 100f);
@@ -92,11 +94,27 @@ namespace Kozar.Science
             return hit.collider.gameObject.layer;
         }
         
-        internal Slot GettedSlot()
+        internal virtual Slot GettedSlot()
         {
             var hit = GetRaycastHit();
             if (!hit.collider) return null;
             return hit.collider.gameObject.GetComponent<Slot>();
+        }
+        
+        internal void SwitchItems(Item item, Slot slot)
+        {
+            item.transform.DOMove(slot.transform.position, _easeTime)
+                .SetLink(item.gameObject)
+                .SetEase(Ease.InOutBack)
+                .OnComplete(() =>
+                {
+                    slot.SetItem(item);
+                    slot.gameObject.layer = 6;
+                    item.transform.parent = slot.transform;
+                    item.PreviousSlot = slot;
+                    item = null;
+                    slot = null;
+                });
         }
     }
 }

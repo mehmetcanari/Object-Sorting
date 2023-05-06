@@ -6,7 +6,7 @@ namespace Kozar.Science
     {
         #region INSPECTOR FIELDS
 
-        public Item item;
+        public global::Item item;
         
         public bool isEmpty;
 
@@ -20,7 +20,7 @@ namespace Kozar.Science
 
         #region PUBLIC METHODS
 
-        public void SetItem(Item item)
+        public void SetItem(global::Item item)
         {
             this.item = item;
             isEmpty = false;
@@ -28,7 +28,7 @@ namespace Kozar.Science
             item.transform.parent = transform;
         }
         
-        public void RemoveItem(Item item)
+        public void RemoveItem(global::Item item)
         {
             this.item = null;
             isEmpty = true;

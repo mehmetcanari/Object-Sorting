@@ -281,6 +281,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 244603312}
     - target: {fileID: 772559416904924157, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
+      propertyPath: stateManager
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f7bb0421d534fa4ea4271d2ff1e7314, type: 2}
+    - target: {fileID: 772559416904924157, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
       propertyPath: followTransform
       value: 
       objectReference: {fileID: 2065912030}
@@ -1858,7 +1862,7 @@ GameObject:
   - component: {fileID: 8800292128052729537}
   - component: {fileID: 8800292128052729536}
   m_Layer: 8
-  m_Name: Slot (1)
+  m_Name: Match Table Slot - 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2117,7 +2121,7 @@ GameObject:
   - component: {fileID: 8800292128704917814}
   - component: {fileID: 8800292128704917809}
   m_Layer: 8
-  m_Name: Slot (3)
+  m_Name: Match Table Slot - 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2205,7 +2209,7 @@ GameObject:
   - component: {fileID: 8800292128965297556}
   - component: {fileID: 8800292128965297559}
   m_Layer: 8
-  m_Name: Slot (2)
+  m_Name: Match Table Slot - 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2275,7 +2279,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8800292129797697413}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2297,6 +2301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8800292129797697412}
   - component: {fileID: 8800292129797697415}
+  - component: {fileID: 8800292129797697416}
   m_Layer: 0
   m_Name: Slots
   m_TagString: Untagged
@@ -2321,6 +2326,19 @@ MonoBehaviour:
   - {fileID: 8800292128052729537}
   - {fileID: 8800292128965297556}
   - {fileID: 8800292128704917814}
+--- !u!114 &8800292129797697416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800292129797697413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fba3d790af5640538cfb8c8bb1660880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: []
 --- !u!114 &8800292129809172068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2385,7 +2403,7 @@ GameObject:
   - component: {fileID: 8800292129809172068}
   - component: {fileID: 8800292129809172071}
   m_Layer: 8
-  m_Name: Slot
+  m_Name: Match Table Slot - 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,11 @@ public abstract class Item : MonoBehaviour
 {
     #region PUBLIC FIELDS
 
-    public Slot Slot { get; private set; }
+    public Slot Slot { get; internal set; }
+    
+    public Slot PreviousSlot { get; internal set; }
+    
+    public ItemType type;
     
     public Quaternion rotation;
 
@@ -54,5 +58,12 @@ public abstract class Item : MonoBehaviour
     }
 
     #endregion
-    
+}
+
+public enum ItemType
+{
+    Ear,
+    Glass,
+    Shoe,
+    Cap
 }

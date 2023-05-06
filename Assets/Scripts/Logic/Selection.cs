@@ -18,6 +18,7 @@ namespace Kozar.Science
         [SerializeField] private Slot selectedSlot;
         [SerializeField] private Transform followTransform;
         [SerializeField] private AudioSource releaseSound;
+        [SerializeField] private StateManager stateManager;
         private Item _item;
 
         #endregion
@@ -26,8 +27,13 @@ namespace Kozar.Science
 
         private void Update()
         {
-            SelectItem();
-            ReleaseItem(_item);
+            switch (stateManager.gameState)
+            {
+                case GameState.Play:
+                    SelectItem();
+                    ReleaseItem(_item);
+                    break;
+            }
         }
 
         #endregion
@@ -51,8 +57,12 @@ namespace Kozar.Science
             selectedSlot = _hit.collider.TryGetComponent(out Slot slot) ? slot : null;
             var selectedItem = selectedSlot?.item;
             if (selectedItem is null) return;
+
+            _item = selectedItem as Item;
             
-            _item = selectedItem;
+            if (selectedSlot.transform.parent.TryGetComponent(out ObjectsVault vault))
+                vault.RemoveItem(_item);
+
             slot.gameObject.layer = 8;
             slot.RemoveItem(selectedItem);
             
@@ -71,8 +81,38 @@ namespace Kozar.Science
             var release = new Release(selectedSlot, 0.1f, releaseSound);
             if (release.CheckLayerWithRaycast() == 8)
             {
-                release.ReleaseItem(item,release.GettedSlot());
-                ReleaseActions(release, item);
+                if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
+                {
+                    if (vault.CheckAnySameType(item))
+                    {
+                        release.ReleaseItem(item, selectedSlot);
+                        ReleaseActions(release, item);
+                    }
+                    else
+                    {
+                        release.ReleaseItem(item,release.GettedSlot());
+                        ReleaseActions(release, item);
+                        vault.AddItem(item);
+                    }
+                }
+                else
+                {
+                    release.ReleaseItem(item,release.GettedSlot());
+                    ReleaseActions(release, item);
+                }
+                
+            }
+            else if (release.CheckLayerWithRaycast() == 6 && item.type == release.GettedSlot().item.type)
+            {
+                if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
+                {
+                    vault.AddItem(item);
+                    vault.RemoveItem(release.GettedSlot().item);
+                    
+                    release.SwitchItems(release.GettedSlot().item, item.PreviousSlot);
+                    release.ReleaseItem(item, release.GettedSlot());
+                    ReleaseActions(release, item);
+                }
             }
             else
             {
@@ -81,13 +121,12 @@ namespace Kozar.Science
             }
         }
 
-        private void ReleaseActions(Release release, Item item)
+        private void ReleaseActions(Release release, global::Item item)
         {
             releaseSound.Play();
             release.EnableCollider(item);
             _item = null;
             selectedSlot = null;
-
         }
 
         #endregion

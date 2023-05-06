@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 191726710464034658}
   - component: {fileID: 191726710464034656}
-  - component: {fileID: 191726710464034657}
+  - component: {fileID: 5372356463065554873}
   m_Layer: 0
   m_Name: Work Boots
   m_TagString: Untagged
@@ -47,7 +47,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5, z: 0.5}
   m_Center: {x: 0, y: 0.2, z: 0}
---- !u!114 &191726710464034657
+--- !u!114 &5372356463065554873
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,9 +56,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 191726710464034659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b7e06a321714b1fbdf85162793bc1e0, type: 3}
+  m_Script: {fileID: 11500000, guid: a0deaebe488cdcb4682f91d316814d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 2
   rotation: {x: 0, y: 0, z: 0, w: 0}
   isPlaced: 0
 --- !u!1 &9074396202801399730

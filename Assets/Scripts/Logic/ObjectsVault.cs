@@ -27,7 +27,6 @@ namespace Kozar.Science
         public void RemoveItem(Item item)
         {
             this.items.Remove(item);
-            Debug.Log("WORKS");
         }
 
         #endregion

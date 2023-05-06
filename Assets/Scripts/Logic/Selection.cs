@@ -20,6 +20,9 @@ namespace Kozar.Science
         [SerializeField] private AudioSource releaseSound;
         [SerializeField] private StateManager stateManager;
         private Item _item;
+        
+        private int _placeableLayer = 8;
+        private int _pickableLayer = 6;
 
         #endregion
 
@@ -58,12 +61,12 @@ namespace Kozar.Science
             var selectedItem = selectedSlot?.item;
             if (selectedItem is null) return;
 
-            _item = selectedItem as Item;
+            _item = selectedItem;
             
             if (selectedSlot.transform.parent.TryGetComponent(out ObjectsVault vault))
                 vault.RemoveItem(_item);
 
-            slot.gameObject.layer = 8;
+            slot.gameObject.layer = _placeableLayer;
             slot.RemoveItem(selectedItem);
             
             var hovering = new Grab(selectedItem, followTransform, 0.1f);
@@ -79,7 +82,7 @@ namespace Kozar.Science
             if (!item) return;
             
             var release = new Release(selectedSlot, 0.1f, releaseSound);
-            if (release.CheckLayerWithRaycast() == 8)
+            if (release.CheckLayerWithRaycast() == _placeableLayer)
             {
                 if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
                 {
@@ -102,7 +105,7 @@ namespace Kozar.Science
                 }
                 
             }
-            else if (release.CheckLayerWithRaycast() == 6 && item.type == release.GettedSlot().item.type)
+            else if (release.CheckLayerWithRaycast() == _pickableLayer && item.type == release.GettedSlot().item.type)
             {
                 if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
                 {
@@ -113,6 +116,11 @@ namespace Kozar.Science
                     release.ReleaseItem(item, release.GettedSlot());
                     ReleaseActions(release, item);
                 }
+                else
+                {
+                    release.ReleaseItem(item, selectedSlot);
+                    ReleaseActions(release, item);
+                }
             }
             else
             {
@@ -121,7 +129,7 @@ namespace Kozar.Science
             }
         }
 
-        private void ReleaseActions(Release release, global::Item item)
+        private void ReleaseActions(Release release, Item item)
         {
             releaseSound.Play();
             release.EnableCollider(item);

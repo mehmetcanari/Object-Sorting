@@ -160,7 +160,6 @@ GameObject:
   - component: {fileID: 772559416904924155}
   - component: {fileID: 772559416904924154}
   - component: {fileID: 772559416904924157}
-  - component: {fileID: 2023206248}
   m_Layer: 0
   m_Name: Logic
   m_TagString: Untagged
@@ -217,18 +216,7 @@ MonoBehaviour:
     m_Bits: 64
   selectedSlot: {fileID: 0}
   followTransform: {fileID: 0}
---- !u!114 &2023206248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 772559416904924152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32b20d724bb4453841e7c3b253c1f1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  releaseSound: {fileID: 0}
 --- !u!1 &917362640166061214
 GameObject:
   m_ObjectHideFlags: 0

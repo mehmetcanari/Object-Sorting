@@ -45,10 +45,9 @@ namespace Kozar.Science
         private Input _input;
         private AudioSource _audioSource;
         
-        internal Release(Slot slot, Vector3 targetPosition, float easeTime, AudioSource audioSource)
+        internal Release(Slot slot, float easeTime, AudioSource audioSource)
         {
             _slot = slot;
-            _targetPosition = targetPosition;
             _easeTime = easeTime;
             _audioSource = audioSource;
         }
@@ -56,21 +55,18 @@ namespace Kozar.Science
         internal void ReleaseItem(Item item,Slot slot)
         {
             if (!item) return;
-            _audioSource.Play();
-            
-            CheckLayerMaskWithReleaseCast();
-
             item.transform.parent = null;
             item.gameObject.transform.DORotate(item.Rotation.eulerAngles, _easeTime)
                 .SetLink(item.gameObject)
                 .SetEase(Ease.InOutBack);
             
-            item.gameObject.transform.DOMove(_targetPosition, _easeTime)
+            item.gameObject.transform.DOMove(slot.transform.position, _easeTime)
                 .SetLink(item.gameObject)
                 .SetEase(Ease.InOutBack)
                 .OnComplete(() =>
                 {
                     slot.SetItem(item);
+                    slot.gameObject.layer = 6;
                     item.transform.parent = slot.transform;
                     item = null;
                     slot = null;
@@ -82,17 +78,25 @@ namespace Kozar.Science
             item.GetComponent<Collider>().enabled = true;
         }
         
-        internal RaycastHit ReleaseCast()
+        private RaycastHit GetRaycastHit()
         {
             var ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
-            Physics.Raycast(ray, out var hit, 10);
+            Physics.Raycast(ray, out var hit, 100f);
             return hit;
         }
         
-        internal void CheckLayerMaskWithReleaseCast()
+        internal LayerMask CheckLayerWithRaycast()
         {
-            if (ReleaseCast().collider is null) return;
-            Debug.Log(ReleaseCast().collider.gameObject.layer);
+            var hit = GetRaycastHit();
+            if (!hit.collider) return 0;
+            return hit.collider.gameObject.layer;
+        }
+        
+        internal Slot GettedSlot()
+        {
+            var hit = GetRaycastHit();
+            if (!hit.collider) return null;
+            return hit.collider.gameObject.GetComponent<Slot>();
         }
     }
 }

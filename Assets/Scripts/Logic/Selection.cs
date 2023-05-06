@@ -50,23 +50,44 @@ namespace Kozar.Science
             
             selectedSlot = _hit.collider.TryGetComponent(out Slot slot) ? slot : null;
             var selectedItem = selectedSlot?.item;
+            if (selectedItem is null) return;
+            
             _item = selectedItem;
-
+            slot.gameObject.layer = 8;
+            slot.RemoveItem(selectedItem);
+            
             var hovering = new Grab(selectedItem, followTransform, 0.1f);
-            hovering.HoverItem();
             hovering.SetParent(selectedItem.transform, followTransform);
             hovering.DisableCollider(selectedItem);
+            hovering.HoverItem();
         }
         
         private void ReleaseItem(Item item)
         {
+            if(selectedSlot == null) return;
             if (!IsReleased()) return;
             if (!item) return;
             
-            var release = new Release(selectedSlot, item.Slot.transform.position, 0.1f, releaseSound);
-            release.ReleaseItem(item,selectedSlot);
+            var release = new Release(selectedSlot, 0.1f, releaseSound);
+            if (release.CheckLayerWithRaycast() == 8)
+            {
+                release.ReleaseItem(item,release.GettedSlot());
+                ReleaseActions(release, item);
+            }
+            else
+            {
+                release.ReleaseItem(item, selectedSlot);
+                ReleaseActions(release, item);
+            }
+        }
+
+        private void ReleaseActions(Release release, Item item)
+        {
+            releaseSound.Play();
             release.EnableCollider(item);
+            _item = null;
             selectedSlot = null;
+
         }
 
         #endregion

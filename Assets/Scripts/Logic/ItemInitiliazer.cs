@@ -12,13 +12,13 @@ namespace Kozar.Science
 
         [SerializeField] private SlotManagement slotManagement;
         [SerializeField] private ItemsData itemsData;
-        [SerializeField] private List<global::Item> items;
+        [SerializeField] private List<Item> items;
 
         #endregion
 
         #region PRIVATE PROPERTIES
         
-        private List<global::Item> NotPlacedItems => items.FindAll(item => !item.IsPlaced);
+        private List<Item> NotPlacedItems => items.FindAll(item => !item.IsPlaced);
 
         #endregion
         
@@ -40,7 +40,7 @@ namespace Kozar.Science
             
             for (int i = 0; i < items.Count; i++)
             {
-                global::Item item = Instantiate(items[i], Vector3.zero, Quaternion.identity);
+                Item item = Instantiate(items[i], Vector3.zero, Quaternion.identity);
                 this.items.Add(item);
                 item.gameObject.SetActive(false);
             }
@@ -52,7 +52,7 @@ namespace Kozar.Science
             
             for (int i = 0; i < emptySlots.Count; i++)
             {
-                global::Item item = NotPlacedItems[UnityEngine.Random.Range(0, NotPlacedItems.Count)];
+                Item item = NotPlacedItems[UnityEngine.Random.Range(0, NotPlacedItems.Count)];
                 emptySlots[i].SetItem(item);
                 item.transform.position = emptySlots[i].transform.position;
                 item.gameObject.SetActive(true);

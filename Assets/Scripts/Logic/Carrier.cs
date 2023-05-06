@@ -19,7 +19,7 @@ namespace Kozar.Science
             this.hoverSpeed = hoverSpeed;
         }
 
-        internal void HoverItem()
+        internal void GrabItem()
         {
             HoveredItem.transform.DOMove(followTransform.position, hoverSpeed)
                 .SetLink(HoveredItem.gameObject)
@@ -39,15 +39,13 @@ namespace Kozar.Science
     
     internal class Release
     {
-        private readonly Slot _slot;
         private Vector3 _targetPosition;
         private float _easeTime;
         private Input _input;
         private AudioSource _audioSource;
         
-        internal Release(Slot slot, float easeTime, AudioSource audioSource)
+        internal Release(float easeTime, AudioSource audioSource)
         {
-            _slot = slot;
             _easeTime = easeTime;
             _audioSource = audioSource;
         }
@@ -66,12 +64,7 @@ namespace Kozar.Science
                 .OnComplete(() =>
                 {
                     slot.SetItem(item);
-                    item.Slot = slot;
-                    item.PreviousSlot = slot;
                     slot.gameObject.layer = 6;
-                    item.transform.parent = slot.transform;
-                    item = null;
-                    slot = null;
                 });
         }
         
@@ -100,8 +93,24 @@ namespace Kozar.Science
             if (!hit.collider) return null;
             return hit.collider.gameObject.GetComponent<Slot>();
         }
+    }
+
+    public class Swap
+    {
+        private Item _item;
+        private Slot _slot;
+        private Release _release;
+        private float _easeTime;
         
-        internal void SwitchItems(Item item, Slot slot)
+        internal Swap(Item item, Slot slot, float easeTime, Release release)
+        {
+            _item = item;
+            _slot = slot;
+            _easeTime = easeTime;
+            _release = release;
+        }
+        
+        internal void SwapItems(Item item, Slot slot)
         {
             item.transform.DOMove(slot.transform.position, _easeTime)
                 .SetLink(item.gameObject)

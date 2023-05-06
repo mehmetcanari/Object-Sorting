@@ -48,8 +48,7 @@ public abstract class Item : MonoBehaviour
     }
 
     #endregion
-
-
+    
     #region PRIVATE METHODS
 
     private void RegisterRotation()
@@ -60,6 +59,8 @@ public abstract class Item : MonoBehaviour
     #endregion
 }
 
+#region SHARED ENUMS
+
 public enum ItemType
 {
     Ear,
@@ -67,3 +68,5 @@ public enum ItemType
     Shoe,
     Cap
 }
+
+#endregion

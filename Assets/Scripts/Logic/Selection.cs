@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices.WindowsRuntime;
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,9 +15,10 @@ namespace Kozar.Science
         #region INSPECTOR FIELDS
 
         private RaycastHit _hit;
+        private Slot _selectedSlot;
+        
         [SerializeField] private float maxDistance;
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private Slot selectedSlot;
         [SerializeField] private Transform followTransform;
         [SerializeField] private AudioSource releaseSound;
         [SerializeField] private StateManager stateManager;
@@ -55,86 +58,96 @@ namespace Kozar.Science
         {
             if (!IsClicked()) return;
             if (!GetRaycastHit().collider) return;
-            if (selectedSlot) return;
+            if (_selectedSlot) return;
             
-            selectedSlot = _hit.collider.TryGetComponent(out Slot slot) ? slot : null;
-            var selectedItem = selectedSlot?.item;
-            if (selectedItem is null) return;
+            _selectedSlot = _hit.collider.TryGetComponent(out Slot slot) ? slot : null;
+            _item = _selectedSlot?.item;
+            if (_item is null) return;
 
-            _item = selectedItem;
-            
-            if (selectedSlot.transform.parent.TryGetComponent(out ObjectsVault vault))
+            if (_selectedSlot.transform.parent.TryGetComponent(out ObjectsVault vault))
                 vault.RemoveItem(_item);
 
             slot.gameObject.layer = _placeableLayer;
-            slot.RemoveItem(selectedItem);
+            slot.RemoveItem(_item);
             
-            var hovering = new Grab(selectedItem, followTransform, 0.1f);
-            hovering.SetParent(selectedItem.transform, followTransform);
-            hovering.DisableCollider(selectedItem);
-            hovering.HoverItem();
+            var grab = new Grab(_item, followTransform, 0.1f);
+            
+            grab.SetParent(_item.transform, followTransform);
+            grab.DisableCollider(_item);
+            grab.GrabItem();
         }
         
         private void ReleaseItem(Item item)
         {
-            if(selectedSlot == null) return;
+            if(_selectedSlot is null) return;
             if (!IsReleased()) return;
             if (!item) return;
             
-            var release = new Release(selectedSlot, 0.1f, releaseSound);
+            var release = new Release(0.1f, releaseSound);
+            
             if (release.CheckLayerWithRaycast() == _placeableLayer)
-            {
-                if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
-                {
-                    if (vault.CheckAnySameType(item))
-                    {
-                        release.ReleaseItem(item, selectedSlot);
-                        ReleaseActions(release, item);
-                    }
-                    else
-                    {
-                        release.ReleaseItem(item,release.GettedSlot());
-                        ReleaseActions(release, item);
-                        vault.AddItem(item);
-                    }
-                }
-                else
-                {
-                    release.ReleaseItem(item,release.GettedSlot());
-                    ReleaseActions(release, item);
-                }
-                
-            }
+                HasItemPlacingAction(release, item);
+            
             else if (release.CheckLayerWithRaycast() == _pickableLayer && item.type == release.GettedSlot().item.type)
+                HasSwitchingItemAction(release, item);
+            
+            else
+                ReleaseInitiliaze(release, item, _selectedSlot, false, null);
+        }
+        
+        #endregion
+
+        #region RELEASE LOGIC METHODS
+
+        private void HasItemPlacingAction(Release release, Item item)
+        {
+            if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
             {
-                if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
-                {
-                    vault.AddItem(item);
-                    vault.RemoveItem(release.GettedSlot().item);
-                    
-                    release.SwitchItems(release.GettedSlot().item, item.PreviousSlot);
-                    release.ReleaseItem(item, release.GettedSlot());
-                    ReleaseActions(release, item);
-                }
+                if (vault.CheckAnySameType(item))
+                    ReleaseInitiliaze(release, item, _selectedSlot, false, null);
                 else
-                {
-                    release.ReleaseItem(item, selectedSlot);
-                    ReleaseActions(release, item);
-                }
+                    ReleaseInitiliaze(release, item, release.GettedSlot(), true, vault);
             }
             else
-            {
-                release.ReleaseItem(item, selectedSlot);
-                ReleaseActions(release, item);
-            }
+                ReleaseInitiliaze(release, item, release.GettedSlot(), false, null);
         }
 
+        private void HasSwitchingItemAction(Release release, Item item)
+        {
+            if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
+            {
+                vault.RemoveItem(release.GettedSlot().item);
+                
+                Swap swap = new Swap(item, release.GettedSlot(), 0.1f, release);
+                swap.SwapItems(release.GettedSlot().item, item.PreviousSlot);
+                
+                ReleaseInitiliaze(release, item, release.GettedSlot(), true, vault);
+            }
+            else
+                ReleaseInitiliaze(release, item, _selectedSlot, false, null);
+        }
+
+        #endregion
+
+        #region HELPER METHODS
+
+        private void ReleaseInitiliaze(Release release, Item item, Slot slot, bool isVault, [CanBeNull] ObjectsVault vault)
+        {
+            release.ReleaseItem(item, slot);
+            ReleaseActions(release, item);
+
+            if (isVault)
+            {
+                vault.AddItem(item);
+            }
+        }
+        
         private void ReleaseActions(Release release, Item item)
         {
             releaseSound.Play();
             release.EnableCollider(item);
             _item = null;
-            selectedSlot = null;
+            _selectedSlot = null;
         }
 
         #endregion

@@ -92,7 +92,7 @@ namespace Kozar.Science
                 HasSwitchingItemAction(release, item);
             
             else
-                ReleaseInitiliaze(release, item, _selectedSlot, false, null);
+                ReleaseMove(release, item, _selectedSlot, false, null);
         }
         
         #endregion
@@ -104,12 +104,12 @@ namespace Kozar.Science
             if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
             {
                 if (vault.CheckAnySameType(item))
-                    ReleaseInitiliaze(release, item, _selectedSlot, false, null);
+                    ReleaseMove(release, item, _selectedSlot, false, null);
                 else
-                    ReleaseInitiliaze(release, item, release.GettedSlot(), true, vault);
+                    ReleaseMove(release, item, release.GettedSlot(), true, vault);
             }
             else
-                ReleaseInitiliaze(release, item, release.GettedSlot(), false, null);
+                ReleaseMove(release, item, release.GettedSlot(), false, null);
         }
 
         private void HasSwitchingItemAction(Release release, Item item)
@@ -121,17 +121,17 @@ namespace Kozar.Science
                 Swap swap = new Swap(item, release.GettedSlot(), 0.1f, release);
                 swap.SwapItems(release.GettedSlot().item, item.PreviousSlot);
                 
-                ReleaseInitiliaze(release, item, release.GettedSlot(), true, vault);
+                ReleaseMove(release, item, release.GettedSlot(), true, vault);
             }
             else
-                ReleaseInitiliaze(release, item, _selectedSlot, false, null);
+                ReleaseMove(release, item, _selectedSlot, false, null);
         }
 
         #endregion
 
         #region HELPER METHODS
 
-        private void ReleaseInitiliaze(Release release, Item item, Slot slot, bool isVault, [CanBeNull] ObjectsVault vault)
+        private void ReleaseMove(Release release, Item item, Slot slot, bool isVault, [CanBeNull] ObjectsVault vault)
         {
             release.ReleaseItem(item, slot);
             ReleaseActions(release, item);
@@ -139,6 +139,12 @@ namespace Kozar.Science
             if (isVault)
             {
                 vault.AddItem(item);
+                
+                if (!vault.IfSlotsAreFull) return;
+                if (!vault.CheckAnySameCategory(ItemCategory.Work)) return;
+                vault.DisableAllSlotsColliders();
+                Debug.Log("slots full");
+                Debug.Log("ALL IS PAIR");
             }
         }
         

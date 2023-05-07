@@ -17,6 +17,8 @@ public abstract class Item : MonoBehaviour
     
     public ItemType type;
     
+    public ItemCategory category;
+    
     public Quaternion rotation;
 
     public bool isPlaced = false;
@@ -46,6 +48,11 @@ public abstract class Item : MonoBehaviour
     {
         Slot = slot;
     }
+    
+    public void SetPreviousSlot(Slot slot)
+    {
+        PreviousSlot = slot;
+    }
 
     #endregion
     
@@ -67,6 +74,12 @@ public enum ItemType
     Glass,
     Shoe,
     Cap
+}
+
+public enum ItemCategory
+{
+    Work,
+    Sport,
 }
 
 #endregion

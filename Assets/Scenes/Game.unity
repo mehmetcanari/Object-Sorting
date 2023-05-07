@@ -2339,6 +2339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  slotManagement: {fileID: 8800292129797697415}
 --- !u!114 &8800292129809172068
 MonoBehaviour:
   m_ObjectHideFlags: 0

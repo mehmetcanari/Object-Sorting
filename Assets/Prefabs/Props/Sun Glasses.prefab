@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  category: 1
   rotation: {x: 0, y: 0, z: 0, w: 0}
   isPlaced: 0
 --- !u!1 &8998089722546497378

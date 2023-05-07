@@ -21,9 +21,16 @@ namespace Kozar.Science
             return items.Exists(x => x.type == item.type);
         }
 
-        public bool IfSlotsAreFull => items.Count >= 4;
+        public int SlotCount => slotManagement.slots.Count;
         
-        public bool CheckAnySameCategory(ItemCategory category)
+        public bool IfSlotsAreFull => items.Count >= SlotCount;
+
+        public bool CheckIfItemDesiredCategory(Item item, ItemCategory category)
+        {
+            return item.category == category;
+        }
+        
+        public bool CheckIfAllItemsAreSameCategory(ItemCategory category)
         {
             return items.TrueForAll(x => x.category == category);
         }

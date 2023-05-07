@@ -22,6 +22,8 @@ namespace Kozar.Science
         [SerializeField] private Transform followTransform;
         [SerializeField] private AudioSource releaseSound;
         [SerializeField] private StateManager stateManager;
+        [SerializeField] private Point point;
+        
         private Item _item;
         
         private int _placeableLayer = 8;
@@ -139,12 +141,15 @@ namespace Kozar.Science
             if (isVault)
             {
                 vault.AddItem(item);
+
+                if (vault.CheckIfItemDesiredCategory(item, ItemCategory.Work))
+                    point.AddPoint(10);
+                else
+                    point.RemovePoint(5);
                 
                 if (!vault.IfSlotsAreFull) return;
-                if (!vault.CheckAnySameCategory(ItemCategory.Work)) return;
+                if (!vault.CheckIfAllItemsAreSameCategory(ItemCategory.Work)) return;
                 vault.DisableAllSlotsColliders();
-                Debug.Log("slots full");
-                Debug.Log("ALL IS PAIR");
             }
         }
         

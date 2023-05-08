@@ -7,7 +7,6 @@ namespace Kozar.Science
     {
         private Vector3 _targetPosition;
         private float _easeTime;
-        private ClickInputHandler _clickInputHandler;
 
         internal Release(float easeTime)
         {

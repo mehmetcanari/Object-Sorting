@@ -398,6 +398,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 772559416904924154, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
+      propertyPath: clickInputProvider
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ee59813cfc9a7f4bbfa6a75b2310408, type: 2}
     - target: {fileID: 772559416904924157, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
       propertyPath: point
       value: 
@@ -418,6 +422,10 @@ PrefabInstance:
       propertyPath: gameScoreHandler
       value: 
       objectReference: {fileID: 11400000, guid: 7c93a26bbd51d8b4da71b2679f919104, type: 2}
+    - target: {fileID: 772559416904924157, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
+      propertyPath: clickInputProvider
+      value: 
+      objectReference: {fileID: 11400000, guid: 2ee59813cfc9a7f4bbfa6a75b2310408, type: 2}
     - target: {fileID: 8441867262690006561, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
       propertyPath: m_Volume
       value: 0.5
@@ -1523,6 +1531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerControllerData: {fileID: 11400000, guid: 28ae012eddf8d7646b31c36ba5d33762, type: 2}
   stateManager: {fileID: 11400000, guid: 0f7bb0421d534fa4ea4271d2ff1e7314, type: 2}
+  clickInputProvider: {fileID: 11400000, guid: 2ee59813cfc9a7f4bbfa6a75b2310408, type: 2}
   orientationTransform: {fileID: 301009240}
 --- !u!1 &976989967
 GameObject:
@@ -2111,6 +2120,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 512
+  clickInputProvider: {fileID: 11400000, guid: 2ee59813cfc9a7f4bbfa6a75b2310408, type: 2}
 --- !u!1 &1361659445
 GameObject:
   m_ObjectHideFlags: 0

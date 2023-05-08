@@ -5,12 +5,13 @@ using UnityEngine;
 
 namespace  Kozar.Science
 {
-    internal class FPSLook : ClickInputHandler
+    internal class FirstPersonController : MonoBehaviour
     {
         #region SHARED FIELDS
 
         [SerializeField] private PlayerControllerData playerControllerData;
         [SerializeField] private StateManager stateManager;
+        [SerializeField] private ClickInputProvider clickInputProvider;
 
         #endregion
         
@@ -54,10 +55,11 @@ namespace  Kozar.Science
         {
             var sensitivityX = playerControllerData.SensitivityX;
             var sensitivityY = playerControllerData.SensitivityY;
+            var provider = clickInputProvider;
 
-            var mouseX = MouseX * Time.deltaTime * sensitivityX;
+            var mouseX = provider.MouseX * Time.deltaTime * sensitivityX;
             
-            var mouseY = MouseY * Time.deltaTime * sensitivityY;
+            var mouseY = provider.MouseY * Time.deltaTime * sensitivityY;
             
             _yRot += mouseX;
             

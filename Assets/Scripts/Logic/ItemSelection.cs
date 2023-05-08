@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 
 namespace Kozar.Science
 {
-    public sealed class ItemSelection : ClickInputHandler
+    public sealed class ItemSelection : MonoBehaviour
     {
         #region INSPECTOR FIELDS
 
@@ -22,6 +22,7 @@ namespace Kozar.Science
         [SerializeField] private AudioSource releaseSound;
         [SerializeField] private StateManager stateManager;
         [SerializeField] private GameScoreHandler gameScoreHandler;
+        [SerializeField] private ClickInputProvider clickInputProvider;
         
         private Item _item;
         
@@ -51,22 +52,25 @@ namespace Kozar.Science
         {
             var ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);
             Physics.Raycast(ray, out _hit, maxDistance, layerMask);
-
+            
             return _hit;
         }
 
         private void SelectItem()
         {
-            if (!IsClicked()) return;
+            if (!clickInputProvider.IsClicked()) return;
             if (!GetRaycastHit().collider) return;
             if (_selectedSlot) return;
             
             _selectedSlot = _hit.collider.TryGetComponent(out Slot slot) ? slot : null;
             _item = _selectedSlot?.item;
-            if (_item is null) return;
+            if (_item == null) return;
 
             if (_selectedSlot.transform.parent.TryGetComponent(out MatchTableVault vault))
+            {
                 vault.RemoveItem(_item);
+                gameScoreHandler.RemovePoint(5);                
+            }
 
             slot.gameObject.layer = _placeableLayer;
             slot.RemoveItem(_item);
@@ -81,7 +85,7 @@ namespace Kozar.Science
         private void ReleaseItem(Item item)
         {
             if(_selectedSlot is null) return;
-            if (!IsReleased()) return;
+            if (!clickInputProvider.IsReleased()) return;
             if (!item) return;
             
             var release = new Release(0.1f);

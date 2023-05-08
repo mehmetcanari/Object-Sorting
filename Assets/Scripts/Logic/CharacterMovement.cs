@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace Kozar.Science
 {
-    public class CharacterMovement : ClickInputHandler
+    public class CharacterMovement : MonoBehaviour
     {
         #region SHARED FIELDS
 
         [SerializeField] private PlayerControllerData playerControllerData;
         [SerializeField] private StateManager stateManager;
+        [SerializeField] private ClickInputProvider clickInputProvider;
         #endregion
         
         #region INSPECTOR FIELDS
@@ -49,8 +50,10 @@ namespace Kozar.Science
 
         private Vector3 GetLocalDirection(Transform targetTransform)
         {
-            var horizontal = IsPressedHold(KeyCode.A) ? -1 : IsPressedHold(KeyCode.D) ? 1 : 0;
-            var vertical = IsPressedHold(KeyCode.S) ? -1 : IsPressedHold(KeyCode.W) ? 1 : 0;
+            var provider = clickInputProvider;
+            
+            var horizontal = provider.IsPressedHold(KeyCode.A) ? -1 : provider.IsPressedHold(KeyCode.D) ? 1 : 0;
+            var vertical = provider.IsPressedHold(KeyCode.S) ? -1 : provider.IsPressedHold(KeyCode.W) ? 1 : 0;
             
             var direction = new Vector3(horizontal, 0, vertical);
             var velocity = direction * playerControllerData.CharacterSpeed;

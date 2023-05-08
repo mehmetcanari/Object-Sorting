@@ -4,12 +4,13 @@ using UnityEngine.Serialization;
 
 namespace Kozar.Science
 {
-    public sealed class DoorSelection : ClickInputHandler
+    public sealed class DoorSelection : MonoBehaviour
     {
         #region INSPECTOR FIELDS
 
         [SerializeField] private int maxDistance;
         [SerializeField] private LayerMask layerMask;
+        [SerializeField] private ClickInputProvider clickInputProvider;
 
         #endregion
         
@@ -44,7 +45,7 @@ namespace Kozar.Science
         
         private void Selection()
         {
-            if (!IsClicked()) return;
+            if (!clickInputProvider.IsClicked()) return;
             if (!GetRaycastHit().collider) return;
             if(!GetRaycastHit().collider.TryGetComponent(out Door door)) return;
             

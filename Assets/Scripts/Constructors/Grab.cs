@@ -5,9 +5,9 @@ namespace Kozar.Science
 {
     internal class Grab
     {
-        protected readonly Item HoveredItem;
-        protected readonly Transform followTransform;
-        protected readonly float hoverSpeed;
+        private readonly Item HoveredItem;
+        private readonly Transform followTransform;
+        private readonly float hoverSpeed;
 
         internal Grab(Item hoveredItem, Transform followTransform, float hoverSpeed)
         {

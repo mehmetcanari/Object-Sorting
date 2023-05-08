@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Kozar.Science
@@ -17,7 +18,7 @@ namespace Kozar.Science
         public int GetPoint => point;
 
         #endregion
-        
+
         #region PUBLIC METHODS
         
         public void AddPoint(int point)
@@ -28,6 +29,9 @@ namespace Kozar.Science
         public void RemovePoint(int point)
         {
             this.point -= point;
+            
+            if(this.point < 0)
+                this.point = 0;
         }
 
         public void ResetPoint()

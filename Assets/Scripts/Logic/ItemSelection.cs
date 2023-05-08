@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 namespace Kozar.Science
 {
     [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    public sealed class Selection : Carrier
+    public sealed class ItemSelection : Carrier
     {
         #region INSPECTOR FIELDS
 
@@ -143,7 +143,7 @@ namespace Kozar.Science
                 vault.AddItem(item);
 
                 if (vault.CheckIfItemDesiredCategory(item, ItemCategory.Work))
-                    point.AddPoint(10);
+                    point.AddPoint(5);
                 else
                     point.RemovePoint(5);
                 

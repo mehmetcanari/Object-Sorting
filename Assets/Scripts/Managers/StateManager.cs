@@ -33,16 +33,6 @@ namespace Kozar.Science
 
         #endregion
 
-
-        #region UNITY METHIDS
-
-        private void Awake()
-        {
-            SetGameState(GameState.Play);
-        }
-
-        #endregion
-        
     }
 
     public enum GameState

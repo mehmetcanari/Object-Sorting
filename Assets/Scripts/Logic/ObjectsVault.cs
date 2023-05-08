@@ -25,30 +25,15 @@ namespace Kozar.Science
         
         public bool IfSlotsAreFull => items.Count >= SlotCount;
 
-        public bool CheckIfItemDesiredCategory(Item item, ItemCategory category)
-        {
-            return item.category == category;
-        }
-        
-        public bool CheckIfAllItemsAreSameCategory(ItemCategory category)
-        {
-            return items.TrueForAll(x => x.category == category);
-        }
-        
-        public void DisableAllSlotsColliders()
-        {
-            slotManagement.slots.ForEach(x => x.GetComponent<Collider>().enabled = false);
-        }
+        public bool CheckIfItemDesiredCategory(Item item, ItemCategory category) => item.category == category;
 
-        public void AddItem(Item item)
-        {
-            this.items.Add(item);
-        }
+        public bool CheckIfAllItemsAreSameCategory(ItemCategory category) => items.TrueForAll(x => x.category == category);
 
-        public void RemoveItem(Item item)
-        {
-            this.items.Remove(item);
-        }
+        public void DisableAllSlotsColliders() => slotManagement.slots.ForEach(x => x.GetComponent<Collider>().enabled = false);
+
+        public void AddItem(Item item) => this.items.Add(item);
+
+        public void RemoveItem(Item item) => this.items.Remove(item);
 
         #endregion
     }

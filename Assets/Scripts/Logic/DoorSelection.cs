@@ -19,7 +19,7 @@ namespace Kozar.Science
 
         #endregion
 
-        #region UNITY METHIDS
+        #region UNITY METHODS
 
         private void Awake()
         {

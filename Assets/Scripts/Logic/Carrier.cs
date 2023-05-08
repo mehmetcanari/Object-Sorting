@@ -26,15 +26,9 @@ namespace Kozar.Science
                 .SetEase(Ease.InOutBack);
         }
         
-        internal void SetParent(Transform obj,Transform parent)
-        {
-            obj.transform.SetParent(parent);
-        }
-        
-        internal void DisableCollider(Item item)
-        {
-            item.GetComponent<Collider>().enabled = false;
-        }
+        internal void SetParent(Transform obj,Transform parent) => obj.transform.SetParent(parent);
+
+        internal void DisableCollider(Item item) => item.GetComponent<Collider>().enabled = false;
     }
     
     internal class Release
@@ -68,11 +62,8 @@ namespace Kozar.Science
                 });
         }
         
-        internal void EnableCollider(Item item)
-        {
-            item.GetComponent<Collider>().enabled = true;
-        }
-        
+        internal void EnableCollider(Item item) => item.GetComponent<Collider>().enabled = true;
+
         internal RaycastHit GetRaycastHit()
         {
             var ray = Camera.main.ScreenPointToRay(UnityEngine.Input.mousePosition);

@@ -1,10 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using Input = Kozar.Science.Input;
 
 namespace Kozar.Science
 {
-    public class CharacterMovement : Input
+    public class CharacterMovement : ClickInputHandler
     {
         #region SHARED FIELDS
 

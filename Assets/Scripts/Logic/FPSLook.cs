@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace  Kozar.Science
 {
-    internal class FPSLook : Input
+    internal class FPSLook : ClickInputHandler
     {
         #region SHARED FIELDS
 

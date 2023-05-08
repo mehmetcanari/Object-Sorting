@@ -414,6 +414,10 @@ PrefabInstance:
       propertyPath: followTransform
       value: 
       objectReference: {fileID: 2065912030}
+    - target: {fileID: 772559416904924157, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
+      propertyPath: gameScoreHandler
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c93a26bbd51d8b4da71b2679f919104, type: 2}
     - target: {fileID: 8441867262690006561, guid: 3b28604c74cedb247b9e1ed18edae584, type: 3}
       propertyPath: m_Volume
       value: 0.5
@@ -1415,7 +1419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5272b9d6979144ac83366e925673fd11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  point: {fileID: 11400000, guid: 7c93a26bbd51d8b4da71b2679f919104, type: 2}
+  gameScoreHandler: {fileID: 11400000, guid: 7c93a26bbd51d8b4da71b2679f919104, type: 2}
   stateManager: {fileID: 11400000, guid: 0f7bb0421d534fa4ea4271d2ff1e7314, type: 2}
   pointText: {fileID: 1566589760}
   endPanel: {fileID: 1057938527}
@@ -3107,7 +3111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateManager: {fileID: 11400000, guid: 0f7bb0421d534fa4ea4271d2ff1e7314, type: 2}
-  point: {fileID: 11400000, guid: 7c93a26bbd51d8b4da71b2679f919104, type: 2}
+  gameScoreHandler: {fileID: 11400000, guid: 7c93a26bbd51d8b4da71b2679f919104, type: 2}
 --- !u!1 &1996944301
 GameObject:
   m_ObjectHideFlags: 0

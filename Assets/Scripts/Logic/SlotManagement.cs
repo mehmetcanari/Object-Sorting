@@ -16,7 +16,7 @@ namespace Kozar.Science
 
         public List<Slot> EmptySlots => slots.FindAll(slot => slot.IsEmpty);
         
-
+        
         #endregion
     }
 }

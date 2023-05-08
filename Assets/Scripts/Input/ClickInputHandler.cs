@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Kozar.Science
 {
-    public abstract class Input : MonoBehaviour
+    public abstract class ClickInputHandler : MonoBehaviour
     {
         #region PUBLIC METHODS
 

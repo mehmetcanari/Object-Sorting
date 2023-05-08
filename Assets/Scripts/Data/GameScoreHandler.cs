@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace Kozar.Science
 {
     [CreateAssetMenu(fileName = "Point Data", menuName = "Point Manager", order = 0)]
-    public sealed class Point : ScriptableObject, IPointHandler
+    public sealed class GameScoreHandler : ScriptableObject, IPointHandler
     {
         #region PRIVATE FIELDS
 

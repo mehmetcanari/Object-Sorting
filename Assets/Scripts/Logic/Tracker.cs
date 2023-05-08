@@ -23,10 +23,7 @@ namespace Kozar.Science
 
         #region PRIVATE METHODS
 
-        private void TrackTarget()
-        {
-            transform.position = targetTransform.position + offset;
-        }
+        private void TrackTarget() => transform.position = targetTransform.position + offset;
 
         #endregion
     }

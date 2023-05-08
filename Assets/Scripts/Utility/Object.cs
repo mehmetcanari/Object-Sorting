@@ -21,7 +21,7 @@ public abstract class Item : MonoBehaviour
     
     public Quaternion rotation;
 
-    public bool isPlaced = false;
+    public bool isPlaced;
 
     #endregion
 
@@ -44,24 +44,15 @@ public abstract class Item : MonoBehaviour
     
     #region PUBLIC METHODS
 
-    public void SetSlot(Slot slot)
-    {
-        Slot = slot;
-    }
-    
-    public void SetPreviousSlot(Slot slot)
-    {
-        PreviousSlot = slot;
-    }
+    public void SetSlot(Slot slot) => Slot = slot;
+
+    public void SetPreviousSlot(Slot slot) => PreviousSlot = slot;
 
     #endregion
     
     #region PRIVATE METHODS
 
-    private void RegisterRotation()
-    {
-        rotation = transform.rotation;
-    }
+    private void RegisterRotation() => rotation = transform.rotation;
 
     #endregion
 }

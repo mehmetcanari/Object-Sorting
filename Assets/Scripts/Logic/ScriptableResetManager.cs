@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Kozar.Science
 {
@@ -8,7 +9,7 @@ namespace Kozar.Science
         #region SHARED FIELDS
 
         [SerializeField] private StateManager stateManager;
-        [SerializeField] private Point point;
+        [SerializeField] private GameScoreHandler gameScoreHandler;
 
         #endregion
         
@@ -24,16 +25,10 @@ namespace Kozar.Science
         
         #region PRIVATE METHODS
         
-        private void ResetPoint()
-        {
-            point.ResetPoint();
-        }
-        
-        private void ResetState()
-        {
-            stateManager.gameState = GameState.Play;
-        }
-        
+        private void ResetPoint() => gameScoreHandler.ResetPoint();
+
+        private void ResetState() => stateManager.gameState = GameState.Play;
+
         #endregion
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace Kozar.Science
 {
-    public sealed class DoorSelection : Input
+    public sealed class DoorSelection : ClickInputHandler
     {
         #region INSPECTOR FIELDS
 
@@ -19,7 +19,7 @@ namespace Kozar.Science
 
         #endregion
 
-        #region UNITY METHIDS
+        #region UNITY METHODS
 
         private void Awake()
         {

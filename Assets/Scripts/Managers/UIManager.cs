@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Kozar.Science
 {
@@ -8,7 +9,7 @@ namespace Kozar.Science
     {
         #region PRIVATE FIELDS
 
-        [SerializeField] private Point point;
+        [SerializeField] private GameScoreHandler gameScoreHandler;
         [SerializeField] private StateManager stateManager;
         [SerializeField] private TextMeshProUGUI pointText;
         [SerializeField] private GameObject endPanel;
@@ -31,25 +32,16 @@ namespace Kozar.Science
         
         #region PRIVATE METHODS
 
-        private void EnableEndPanel()
-        {
-            endPanel.SetActive(true);
-        }
+        private void EnableEndPanel() => endPanel.SetActive(true);
+
+        private void ShowPoint() => pointText.SetText("Puan: " + gameScoreHandler.GetPoint);
         
-        private void ShowPoint()
-        {
-            pointText.SetText("Puan: " + point.GetPoint);
-        }
+        public void EndState() => stateManager.GameState = GameState.End;
         
         private void EnableCursor()
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-        }
-        
-        public void EndState()
-        {
-            stateManager.GameState = GameState.End;
         }
 
         #endregion

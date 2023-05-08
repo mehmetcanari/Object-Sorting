@@ -9,8 +9,7 @@ using UnityEngine.Serialization;
 
 namespace Kozar.Science
 {
-    [SuppressMessage("ReSharper", "PossibleNullReferenceException")]
-    public sealed class ItemSelection : Carrier
+    public sealed class ItemSelection : ClickInputHandler
     {
         #region INSPECTOR FIELDS
 
@@ -22,7 +21,7 @@ namespace Kozar.Science
         [SerializeField] private Transform followTransform;
         [SerializeField] private AudioSource releaseSound;
         [SerializeField] private StateManager stateManager;
-        [SerializeField] private Point point;
+        [SerializeField] private GameScoreHandler gameScoreHandler;
         
         private Item _item;
         
@@ -66,7 +65,7 @@ namespace Kozar.Science
             _item = _selectedSlot?.item;
             if (_item is null) return;
 
-            if (_selectedSlot.transform.parent.TryGetComponent(out ObjectsVault vault))
+            if (_selectedSlot.transform.parent.TryGetComponent(out MatchTableVault vault))
                 vault.RemoveItem(_item);
 
             slot.gameObject.layer = _placeableLayer;
@@ -85,7 +84,7 @@ namespace Kozar.Science
             if (!IsReleased()) return;
             if (!item) return;
             
-            var release = new Release(0.1f, releaseSound);
+            var release = new Release(0.1f);
             
             if (release.CheckLayerWithRaycast() == _placeableLayer)
                 HasItemPlacingAction(release, item);
@@ -103,7 +102,7 @@ namespace Kozar.Science
 
         private void HasItemPlacingAction(Release release, Item item)
         {
-            if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
+            if (release.GetRaycastHit().transform.parent.TryGetComponent(out MatchTableVault vault))
             {
                 if (vault.CheckAnySameType(item))
                     ReleaseMove(release, item, _selectedSlot, false, null);
@@ -116,7 +115,7 @@ namespace Kozar.Science
 
         private void HasSwitchingItemAction(Release release, Item item)
         {
-            if (release.GetRaycastHit().transform.parent.TryGetComponent(out ObjectsVault vault))
+            if (release.GetRaycastHit().transform.parent.TryGetComponent(out MatchTableVault vault))
             {
                 vault.RemoveItem(release.GettedSlot().item);
                 
@@ -133,7 +132,7 @@ namespace Kozar.Science
 
         #region HELPER METHODS
 
-        private void ReleaseMove(Release release, Item item, Slot slot, bool isVault, [CanBeNull] ObjectsVault vault)
+        private void ReleaseMove(Release release, Item item, Slot slot, bool isVault, [CanBeNull] MatchTableVault vault)
         {
             release.ReleaseItem(item, slot);
             ReleaseActions(release, item);
@@ -143,9 +142,9 @@ namespace Kozar.Science
                 vault.AddItem(item);
 
                 if (vault.CheckIfItemDesiredCategory(item, ItemCategory.Work))
-                    point.AddPoint(5);
+                    gameScoreHandler.AddPoint(5);
                 else
-                    point.RemovePoint(5);
+                    gameScoreHandler.RemovePoint(5);
                 
                 if (!vault.IfSlotsAreFull) return;
                 if (!vault.CheckIfAllItemsAreSameCategory(ItemCategory.Work)) return;
